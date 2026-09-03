@@ -10,3 +10,4 @@ tavily-python
 python-dotenv
 langchain-huggingface
 reportlab
+torchvision
