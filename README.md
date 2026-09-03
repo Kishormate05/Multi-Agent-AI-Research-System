@@ -1,238 +1,208 @@
 # 🤖 Multi-Agent AI Research System
 
-```{=html}
-<p align="center">
-```
-`<strong>`{=html}Research • RAG • Analysis • Report
-Generation`</strong>`{=html}
-```{=html}
-</p>
-```
-```{=html}
-<p align="center">
-```
-`<a href="https://multi-agentic-ai-research-system.streamlit.app/">`{=html}
-🚀 Live Demo `</a>`{=html}   •  
-`<a href="https://github.com/Kishormate05/Multi-Agent-AI-Research-System">`{=html}
-💻 GitHub Repository `</a>`{=html}
-```{=html}
-</p>
-```
+> **An Agentic AI research assistant that combines Web Research, PDF RAG, Multi-Agent Reasoning, and Automated Report Generation.**
 
-------------------------------------------------------------------------
+[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Streamlit-red?style=for-the-badge)](https://multi-agentic-ai-research-system.streamlit.app/)
+[![GitHub](https://img.shields.io/badge/💻%20GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/Kishormate05/Multi-Agent-AI-Research-System)
+[![Python](https://img.shields.io/badge/Python-3.12-blue?style=for-the-badge&logo=python)](https://www.python.org/)
+[![LangGraph](https://img.shields.io/badge/LangGraph-Multi--Agent-orange?style=for-the-badge)](https://www.langchain.com/langgraph)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Deployed-FF4B4B?style=for-the-badge&logo=streamlit)](https://streamlit.io/)
 
-## 📌 Overview
-
-**Multi-Agent AI Research System** is an Agentic AI-powered research
-assistant that automates the end-to-end research workflow using multiple
-specialized AI agents.
-
-The system combines **web research, PDF-based Retrieval-Augmented
-Generation (RAG), AI analysis, and automated report generation** into a
-single workflow.
-
-Instead of depending on one LLM call, the application uses specialized
-agents coordinated through **LangGraph**. Each agent performs a
-dedicated task and passes its results to the next stage, producing a
-structured research report.
-
-### 🎯 Core Workflow
-
-``` text
-User Query
-    ↓
-Research Agent
-    ↓
-RAG Agent
-    ↓
-Analysis Agent
-    ↓
-Report Agent
-    ↓
-Final Research Report
-```
-
-------------------------------------------------------------------------
+---
 
 ## 🚀 Live Demo
 
-### 👉 [Launch the Live Application](https://multi-agentic-ai-research-system.streamlit.app/)
+### 👉 [Open the Live Application](https://multi-agentic-ai-research-system.streamlit.app/)
 
-The application is deployed on **Streamlit Community Cloud** and can be
-accessed directly from a browser.
+Enter a research question and let the multi-agent pipeline collect information, retrieve relevant PDF knowledge, analyze the results, and generate a structured report.
 
-------------------------------------------------------------------------
+---
+
+## 🎯 What This Project Does
+
+This project automates the research workflow using **specialized AI agents** instead of a single LLM prompt.
+
+For every research query, the system:
+
+**🔍 Researches the Web → 📚 Retrieves PDF Knowledge → 🧠 Analyzes Information → 📝 Generates a Report**
+
+The application combines external web knowledge with information retrieved from a local **FAISS vector database**.
+
+---
 
 ## ✨ Key Features
 
-### 🔍 1. Web Research Agent
+| Feature | Description |
+|---|---|
+| 🔍 **Web Research** | Uses Tavily to collect relevant web information |
+| 📚 **PDF RAG** | Retrieves relevant content from uploaded research PDFs |
+| 🗄️ **FAISS Vector Search** | Performs semantic similarity search over document chunks |
+| 🤖 **Multi-Agent Workflow** | Uses LangGraph to orchestrate specialized agents |
+| 🧠 **AI Analysis** | Combines web and document knowledge |
+| 📝 **Report Generation** | Produces a structured research report |
+| 📂 **PDF Upload** | Upload research documents through the Streamlit UI |
+| 🕒 **Chat History** | Keeps generated research queries in the current session |
+| 📥 **Report Download** | Download the generated report as a text file |
+| ☁️ **Cloud Deployment** | Available as a public Streamlit application |
 
-The Research Agent uses **Tavily Search** to gather relevant information
-from the web.
+---
 
-**Responsibilities:** - Search the web for the requested topic - Collect
-relevant sources - Extract useful research content - Prepare research
-information for downstream analysis
+# 🧠 Multi-Agent Architecture
 
-------------------------------------------------------------------------
+```text
+                         USER QUERY
+                              │
+                              ▼
+                  ┌──────────────────────┐
+                  │   🔍 RESEARCH AGENT  │
+                  │      Tavily Search   │
+                  └──────────┬───────────┘
+                             │
+                             ▼
+                  ┌──────────────────────┐
+                  │      📚 RAG AGENT    │
+                  │   PDF + FAISS Search │
+                  └──────────┬───────────┘
+                             │
+                             ▼
+                  ┌──────────────────────┐
+                  │    🧠 ANALYSIS AGENT │
+                  │  Reason & Synthesize │
+                  └──────────┬───────────┘
+                             │
+                             ▼
+                  ┌──────────────────────┐
+                  │    📝 REPORT AGENT   │
+                  │ Structured Reporting │
+                  └──────────┬───────────┘
+                             │
+                             ▼
+                    FINAL RESEARCH REPORT
+```
 
-### 📚 2. PDF-Based RAG Agent
+---
 
-The RAG Agent allows the system to use knowledge stored in research
-PDFs.
+# 🔄 End-to-End Workflow
 
-**Pipeline:**
+### 1️⃣ User Query
+The user enters a research question.
 
-``` text
-PDF Documents
-     ↓
-PyPDF Loader
-     ↓
-Text Splitting
-     ↓
+Example:
+
+```text
+What is Agentic AI and how does it work?
+```
+
+### 2️⃣ Research Agent
+Tavily searches the web and collects relevant sources.
+
+### 3️⃣ RAG Agent
+The query is matched against PDF embeddings stored in FAISS.
+
+### 4️⃣ Analysis Agent
+Web research and retrieved document context are combined and analyzed.
+
+### 5️⃣ Report Agent
+The analysis is converted into a structured research report.
+
+### 6️⃣ Final Output
+The user receives the generated report directly in the Streamlit interface.
+
+---
+
+# 📚 RAG Pipeline
+
+```text
+Research PDFs
+     │
+     ▼
+PyPDFLoader
+     │
+     ▼
+Text Extraction
+     │
+     ▼
+Recursive Text Splitting
+     │
+     ▼
 HuggingFace Embeddings
-     ↓
+     │
+     ▼
 FAISS Vector Database
-     ↓
-Semantic Similarity Search
-     ↓
-Relevant Context
-     ↓
+     │
+     ▼
+Similarity Search
+     │
+     ▼
+Relevant Document Chunks
+     │
+     ▼
 Gemini LLM
+     │
+     ▼
+Context-Aware Answer
 ```
 
-The system retrieves relevant document chunks before generating an
-answer, helping the model ground its response in the available PDF
-knowledge.
+### Why RAG?
 
-------------------------------------------------------------------------
+RAG allows the system to retrieve relevant information from the project's PDF knowledge base before generating an answer. This makes the document knowledge an explicit part of the research workflow.
 
-### 🧠 3. Analysis Agent
+---
 
-The Analysis Agent combines:
+# 🤖 Agent Responsibilities
 
--   Web research results
--   Retrieved PDF/RAG context
+### 🔍 Research Agent
+**Tool:** Tavily
 
-It analyzes the information and identifies:
+- Performs web search
+- Collects relevant sources
+- Extracts useful research content
+- Produces web-based research information
 
--   Key findings
--   Important insights
--   Trends
--   Challenges
--   Future scope
+### 📚 RAG Agent
+**Tools:** FAISS + HuggingFace Embeddings
 
-------------------------------------------------------------------------
+- Searches the PDF knowledge base
+- Finds semantically relevant chunks
+- Passes retrieved context to the LLM
 
-### 📝 4. Report Generation Agent
+### 🧠 Analysis Agent
+**Model:** Google Gemini
 
-The Report Agent converts the analysis into a structured research
-report.
+- Combines web research and RAG results
+- Identifies important findings
+- Extracts trends and challenges
+- Produces analytical insights
 
-The generated report can contain:
+### 📝 Report Agent
+**Model:** Google Gemini
 
--   Executive Summary
--   Key Findings
--   Important Trends
--   Challenges
--   Future Scope
+- Converts analysis into a structured report
+- Generates executive summaries
+- Organizes findings, trends, challenges, and future scope
 
-------------------------------------------------------------------------
-
-### 🔗 5. Multi-Agent Workflow with LangGraph
-
-The complete agent workflow is orchestrated using **LangGraph**.
-
-``` text
-                 ┌─────────────────────┐
-                 │     User Query      │
-                 └──────────┬──────────┘
-                            ↓
-                 ┌─────────────────────┐
-                 │   Research Agent   │
-                 │   Tavily Search    │
-                 └──────────┬──────────┘
-                            ↓
-                 ┌─────────────────────┐
-                 │      RAG Agent      │
-                 │ PDF + FAISS Search  │
-                 └──────────┬──────────┘
-                            ↓
-                 ┌─────────────────────┐
-                 │   Analysis Agent   │
-                 │   Compare & Reason │
-                 └──────────┬──────────┘
-                            ↓
-                 ┌─────────────────────┐
-                 │    Report Agent    │
-                 │ Structured Report  │
-                 └──────────┬──────────┘
-                            ↓
-                 ┌─────────────────────┐
-                 │   Final AI Report  │
-                 └─────────────────────┘
-```
-
-------------------------------------------------------------------------
-
-## 🏗️ System Architecture
-
-The system consists of four major AI agents:
-
-  -----------------------------------------------------------------------
-  Agent                   Main Responsibility     Technology
-  ----------------------- ----------------------- -----------------------
-  🔍 Research Agent       Web research and source Tavily
-                          collection              
-
-  📚 RAG Agent            PDF retrieval and       FAISS + HuggingFace
-                          contextual answering    
-
-  🧠 Analysis Agent       Analyze and synthesize  Gemini
-                          information             
-
-  📝 Report Agent         Generate structured     Gemini
-                          research report         
-  -----------------------------------------------------------------------
-
-### Agent State Flow
-
-``` text
-query
-  │
-  ├── web_result
-  │
-  ├── pdf_result
-  │
-  ├── analysis
-  │
-  └── report
-```
-
-The workflow state is passed between agents using LangGraph.
-
-------------------------------------------------------------------------
+---
 
 # 🛠️ Tech Stack
 
-  Technology         Purpose
-  ------------------ ------------------------------------
-  🐍 Python          Core programming language
-  🔗 LangGraph       Multi-agent workflow orchestration
-  🦜 LangChain       LLM application framework
-  💎 Google Gemini   Large Language Model
-  🌐 Tavily          Web search and research
-  🗄️ FAISS           Vector similarity search
-  🤗 HuggingFace     Text embeddings
-  📄 PyPDF           PDF document processing
-  🎈 Streamlit       Web application interface
-  🔐 python-dotenv   Environment variable management
+| Technology | Role |
+|---|---|
+| **Python** | Core development |
+| **LangGraph** | Agent orchestration |
+| **LangChain** | LLM application framework |
+| **Google Gemini** | LLM / reasoning |
+| **Tavily** | Web research |
+| **FAISS** | Vector database |
+| **HuggingFace** | Text embeddings |
+| **PyPDF** | PDF processing |
+| **Streamlit** | Web interface |
+| **python-dotenv** | Environment configuration |
 
-------------------------------------------------------------------------
+---
 
 # 📂 Project Structure
 
-``` text
+```text
 Multi-Agent-AI-Research-System/
 │
 ├── agents/
@@ -262,408 +232,216 @@ Multi-Agent-AI-Research-System/
 └── README.md
 ```
 
-------------------------------------------------------------------------
+---
 
-# ⚙️ How It Works
+# 🖥️ Application
 
-## Step 1 --- Enter a Research Query
+The Streamlit application provides a simple research workspace:
 
-The user enters a topic such as:
-
-``` text
-What is Agentic AI and how does it work?
+```text
+┌─────────────────────────────────────────────────┐
+│        🤖 Multi-Agent AI Research System        │
+├─────────────────────────────────────────────────┤
+│                                                 │
+│  📂 PDF Management                              │
+│  ├── Upload PDF Files                           │
+│  └── Create Vector Database                     │
+│                                                 │
+│  🔍 Enter Research Query                        │
+│                                                 │
+│  [ Generate Report ]                            │
+│                                                 │
+│  🔍 Research Agent      ✓ Complete              │
+│  📚 RAG Agent           ✓ Complete              │
+│  🧠 Analysis Agent     ✓ Complete              │
+│  📝 Report Agent       ✓ Complete              │
+│                                                 │
+│  📄 Generated Research Report                   │
+│                                                 │
+└─────────────────────────────────────────────────┘
 ```
 
-------------------------------------------------------------------------
+---
 
-## Step 2 --- Research Agent
-
-The Research Agent sends the query to Tavily and collects relevant web
-information.
-
-``` text
-User Query
-    ↓
-Tavily Search
-    ↓
-Relevant Web Sources
-    ↓
-Research Summary
-```
-
-------------------------------------------------------------------------
-
-## Step 3 --- RAG Agent
-
-The RAG Agent searches the FAISS vector database for relevant PDF
-content.
-
-``` text
-User Query
-    ↓
-Embedding
-    ↓
-FAISS Similarity Search
-    ↓
-Top Relevant Chunks
-    ↓
-Context
-```
-
-------------------------------------------------------------------------
-
-## Step 4 --- Analysis Agent
-
-The Analysis Agent receives both sources of information:
-
-``` text
-Web Research
-     +
-PDF/RAG Context
-     ↓
-Analysis Agent
-     ↓
-Combined Insights
-```
-
-------------------------------------------------------------------------
-
-## Step 5 --- Report Agent
-
-The Report Agent converts the analysis into a structured final report.
-
-``` text
-Analysis
-   ↓
-Report Generation
-   ↓
-Executive Summary
-Key Findings
-Trends
-Challenges
-Future Scope
-```
-
-------------------------------------------------------------------------
-
-# 📚 RAG Implementation
-
-The project uses a local FAISS vector database for semantic document
-retrieval.
-
-### Document Processing
-
-``` text
-PDF
- ↓
-PyPDFLoader
- ↓
-Document Pages
- ↓
-RecursiveCharacterTextSplitter
- ↓
-Text Chunks
- ↓
-all-MiniLM-L6-v2 Embeddings
- ↓
-FAISS Index
-```
-
-### Retrieval
-
-``` text
-Question
-   ↓
-Question Embedding
-   ↓
-FAISS Similarity Search
-   ↓
-Top-k Relevant Documents
-   ↓
-LLM Context
-   ↓
-Answer
-```
-
-The current vector database is generated from the PDFs stored under:
-
-``` text
-documents/pdfs/
-```
-
-------------------------------------------------------------------------
-
-# 🖥️ Application Features
-
-The Streamlit interface provides:
-
--   📂 PDF file upload
--   🗄️ FAISS vector database creation
--   🔍 Research query input
--   🤖 Multi-agent execution status
--   📚 PDF-based RAG
--   🧠 AI-powered analysis
--   📝 Automated report generation
--   📥 Report download
--   🕒 Chat history
-
-------------------------------------------------------------------------
-
-# 🧪 Example
+# 📊 Example
 
 ### Input
 
-``` text
+```text
 What is Agentic AI and how does it work?
 ```
 
-### Agent Execution
+### Processing
 
-``` text
-🔍 Research Agent      → Complete
-📚 RAG Agent           → Complete
-🧠 Analysis Agent      → Complete
-📝 Report Agent        → Complete
+```text
+Web Sources
+     +
+PDF Knowledge
+     ↓
+Research + RAG
+     ↓
+Analysis
+     ↓
+Report Generation
 ```
 
 ### Output
 
-A structured research report containing sections such as:
+The application generates a structured report containing sections such as:
 
-``` text
-Executive Summary
-Key Findings
-Important Trends
-Challenges
-Future Scope
-```
+- Executive Summary
+- Key Findings
+- Important Trends
+- Challenges
+- Future Scope
 
-------------------------------------------------------------------------
+---
 
-# 📊 Why Multi-Agent Architecture?
-
-A multi-agent architecture separates complex research into specialized
-tasks.
-
-### Benefits
-
--   🎯 Task specialization
--   🔄 Structured workflow
--   🧩 Modular architecture
--   📈 Easier scalability
--   🧠 Better separation of responsibilities
--   🔍 Combination of web and document knowledge
--   📝 Automated end-to-end report generation
-
-------------------------------------------------------------------------
-
-# 🔐 Environment Variables
-
-The application requires API credentials for external services.
-
-Create a `.env` file locally:
-
-``` env
-GOOGLE_API_KEY=your_google_api_key
-TAVILY_API_KEY=your_tavily_api_key
-```
-
-### ⚠️ Security
-
-Never commit API keys or `.env` files to GitHub.
-
-For Streamlit Cloud deployment, use the platform's **Secrets**
-configuration instead of committing credentials.
-
-------------------------------------------------------------------------
-
-# 💻 Installation & Local Setup
+# 💻 Run Locally
 
 ## 1. Clone the Repository
 
-``` bash
+```bash
 git clone https://github.com/Kishormate05/Multi-Agent-AI-Research-System.git
-```
-
-``` bash
 cd Multi-Agent-AI-Research-System
 ```
 
-------------------------------------------------------------------------
-
-## 2. Create a Virtual Environment
+## 2. Create Virtual Environment
 
 ### Windows
 
-``` bash
+```bash
 py -m venv .venv
-```
-
-Activate it:
-
-``` bash
 .venv\Scripts\activate
 ```
 
-------------------------------------------------------------------------
-
 ## 3. Install Dependencies
 
-``` bash
+```bash
 pip install -r requirements.txt
 ```
 
-------------------------------------------------------------------------
-
 ## 4. Configure API Keys
 
-Create `.env`:
+Create a `.env` file:
 
-``` env
+```env
 GOOGLE_API_KEY=your_google_api_key
 TAVILY_API_KEY=your_tavily_api_key
 ```
 
-------------------------------------------------------------------------
+> ⚠️ Never commit API keys or `.env` files to GitHub.
 
-## 5. Create the FAISS Vector Database
+## 5. Build the FAISS Database
 
-``` bash
+```bash
 python -c "from vectorstore.create_db import create_vector_db; create_vector_db()"
 ```
 
-This processes the PDFs and creates:
+## 6. Start the Application
 
-``` text
-vectorstore/faiss_index/
-├── index.faiss
-└── index.pkl
-```
-
-------------------------------------------------------------------------
-
-## 6. Run the Application
-
-``` bash
+```bash
 streamlit run streamlit_app.py
 ```
 
-------------------------------------------------------------------------
+---
 
 # ☁️ Deployment
 
-The project is deployed using **Streamlit Community Cloud**.
+The application is deployed on **Streamlit Community Cloud**.
 
-### Production Workflow
+### 🌐 Production Demo
 
-``` text
-GitHub Repository
-       ↓
-Streamlit Community Cloud
-       ↓
-Dependency Installation
-       ↓
-Secrets Configuration
-       ↓
-Application Deployment
-       ↓
-Public Live Demo
-```
+**[Launch Multi-Agent AI Research System →](https://multi-agentic-ai-research-system.streamlit.app/)**
 
-### 🌐 Live Application
+The deployment uses:
 
-👉 **https://multi-agentic-ai-research-system.streamlit.app/**
+- Python 3.12
+- GitHub repository
+- Streamlit Community Cloud
+- Secure environment secrets
+- Pre-built FAISS vector database
 
-------------------------------------------------------------------------
+---
 
-# 📈 Current Implementation
+# 🔐 Environment Variables
 
-The current version successfully demonstrates:
+| Variable | Purpose |
+|---|---|
+| `GOOGLE_API_KEY` | Access Google Gemini |
+| `TAVILY_API_KEY` | Access Tavily web search |
 
--   ✅ Multi-agent orchestration
--   ✅ Web research
--   ✅ PDF-based RAG
--   ✅ FAISS vector retrieval
--   ✅ HuggingFace embeddings
--   ✅ Gemini-powered reasoning
--   ✅ Automated report generation
--   ✅ Streamlit web interface
--   ✅ Public cloud deployment
+For cloud deployment, store these values in the hosting platform's secret manager.
 
-------------------------------------------------------------------------
-
-# 🔮 Future Improvements
-
-Potential improvements include:
-
--   ⚡ Parallel agent execution for faster responses
--   🧠 Persistent long-term memory
--   📊 Research analytics and visualizations
--   📑 Multiple independent document collections
--   🔎 Improved source citation and verification
--   💬 Persistent conversational memory
--   📥 Advanced PDF report generation
--   👤 User authentication
--   🗂️ Research project/workspace management
--   🚀 Production-grade caching and model optimization
-
-------------------------------------------------------------------------
+---
 
 # 🎯 Use Cases
 
-The system can support:
+This system can be useful for:
 
--   📖 Academic research
--   🔬 Technical research
--   🤖 AI/ML research
--   📊 Market research
--   📰 Information analysis
--   📚 Research paper analysis
--   🧑‍💻 Developer research
--   📑 Automated report generation
+- 📖 Academic research
+- 🔬 Technical research
+- 🤖 AI / ML research
+- 📊 Market research
+- 📚 Research paper analysis
+- 🧑‍💻 Developer research
+- 📰 Information analysis
+- 📑 Automated report generation
 
-------------------------------------------------------------------------
+---
 
-# 📸 Demo
+# 📈 What This Project Demonstrates
 
-### Application Interface
+This project demonstrates practical implementation of:
 
-The application provides a simple research workflow where users can:
+- ✅ Agentic AI
+- ✅ Multi-Agent Systems
+- ✅ LangGraph orchestration
+- ✅ LangChain
+- ✅ Retrieval-Augmented Generation
+- ✅ Vector databases
+- ✅ Semantic search
+- ✅ LLM-based reasoning
+- ✅ Web research automation
+- ✅ Document intelligence
+- ✅ Automated report generation
+- ✅ Streamlit deployment
 
-1.  Upload PDF documents
-2.  Create/update the vector database
-3.  Enter a research query
-4.  Run the multi-agent workflow
-5.  Review the generated report
-6.  Download the result
+---
 
-------------------------------------------------------------------------
+# 🔮 Future Enhancements
+
+- ⚡ Parallel agent execution
+- 💾 Persistent long-term memory
+- 📊 Research analytics and visualizations
+- 🔎 Better source citation and verification
+- 📑 Multiple document collections
+- 💬 Persistent conversational memory
+- 📥 Advanced PDF report generation
+- 👤 User authentication
+- 🗂️ Research workspace management
+- 🚀 Advanced caching and performance optimization
+
+---
 
 # 🧩 Design Principles
 
 ### Modular
+Each agent has a dedicated responsibility and can be modified independently.
 
-Each agent is implemented as an independent module.
-
-### Extensible
-
-New agents and tools can be added to the LangGraph workflow.
+### Scalable
+New agents, tools, and workflow stages can be added to the LangGraph pipeline.
 
 ### Retrieval-Augmented
-
-The RAG pipeline grounds responses using relevant PDF content.
+Relevant document context is retrieved before generating RAG-based answers.
 
 ### Agent-Oriented
-
-Different stages of research are handled by specialized agents rather
-than a single monolithic prompt.
+The research workflow is divided into specialized stages instead of relying on a single prompt.
 
 ### Deployment Ready
+The application is available as a public Streamlit web application.
 
-The application is configured for browser-based use through Streamlit
-Community Cloud.
-
-------------------------------------------------------------------------
+---
 
 # 👨‍💻 Author
 
@@ -671,24 +449,18 @@ Community Cloud.
 
 **AI / ML • Generative AI • Agentic AI • Data Science**
 
-------------------------------------------------------------------------
+---
 
-## ⭐ Project
+## ⭐ Support the Project
 
-If you find this project useful or interesting, consider giving the
-repository a ⭐ on GitHub.
+If you find this project useful, consider giving the repository a ⭐.
 
-### 🚀 [Try the Live Demo](https://multi-agentic-ai-research-system.streamlit.app/)
+### 🚀 [Live Demo](https://multi-agentic-ai-research-system.streamlit.app/)
 
-### 💻 [View Source Code](https://github.com/Kishormate05/Multi-Agent-AI-Research-System)
+### 💻 [GitHub Repository](https://github.com/Kishormate05/Multi-Agent-AI-Research-System)
 
-------------------------------------------------------------------------
+---
 
-```{=html}
 <p align="center">
-```
-Built with Python, LangGraph, LangChain, Gemini, Tavily, FAISS,
-HuggingFace & Streamlit.
-```{=html}
+  <strong>Built with Python • LangGraph • LangChain • Gemini • Tavily • FAISS • HuggingFace • Streamlit</strong>
 </p>
-```
